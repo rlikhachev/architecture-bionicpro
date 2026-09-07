@@ -1,129 +1,695 @@
 {
-    "realm": "reports-realm",
-    "enabled": true,
-    "roles": {
-      "realm": [
+  "realm": "reports-realm",
+  "enabled": true,
+  "sslRequired": "none",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": false,
+  "editUsernameAllowed": false,
+  "bruteForceProtected": true,
+  "accessTokenLifespan": 120,
+  "accessTokenLifespanForImplicitFlow": 120,
+  "ssoSessionIdleTimeout": 28800,
+  "ssoSessionMaxLifespan": 28800,
+  "offlineSessionIdleTimeout": 2592000,
+  "offlineSessionMaxLifespanEnabled": true,
+  "offlineSessionMaxLifespan": 2592000,
+  "otpPolicyType": "totp",
+  "otpPolicyAlgorithm": "HmacSHA1",
+  "otpPolicyDigits": 6,
+  "otpPolicyLookAheadWindow": 1,
+  "otpPolicyPeriod": 30,
+  "otpSupportedApplications": ["totpAppFreeOTPName", "totpAppGoogleName"],
+  "browserFlow": "BionicPRO browser",
+  "requiredActions": [
+    {
+      "alias": "CONFIGURE_TOTP",
+      "name": "Configure OTP",
+      "providerId": "CONFIGURE_TOTP",
+      "enabled": true,
+      "defaultAction": true,
+      "priority": 10,
+      "config": {}
+    },
+    {
+      "alias": "UPDATE_PASSWORD",
+      "name": "Update Password",
+      "providerId": "UPDATE_PASSWORD",
+      "enabled": true,
+      "defaultAction": false,
+      "priority": 30,
+      "config": {}
+    },
+    {
+      "alias": "UPDATE_PROFILE",
+      "name": "Update Profile",
+      "providerId": "UPDATE_PROFILE",
+      "enabled": true,
+      "defaultAction": false,
+      "priority": 40,
+      "config": {}
+    },
+    {
+      "alias": "VERIFY_EMAIL",
+      "name": "Verify Email",
+      "providerId": "VERIFY_EMAIL",
+      "enabled": true,
+      "defaultAction": false,
+      "priority": 50,
+      "config": {}
+    },
+    {
+      "alias": "webauthn-register",
+      "name": "Webauthn Register",
+      "providerId": "webauthn-register",
+      "enabled": true,
+      "defaultAction": false,
+      "priority": 70,
+      "config": {}
+    },
+    {
+      "alias": "webauthn-register-passwordless",
+      "name": "Webauthn Register Passwordless",
+      "providerId": "webauthn-register-passwordless",
+      "enabled": true,
+      "defaultAction": false,
+      "priority": 80,
+      "config": {}
+    },
+    {
+      "alias": "delete_account",
+      "name": "Delete Account",
+      "providerId": "delete_account",
+      "enabled": false,
+      "defaultAction": false,
+      "priority": 90,
+      "config": {}
+    },
+    {
+      "alias": "update_user_locale",
+      "name": "Update User Locale",
+      "providerId": "update_user_locale",
+      "enabled": true,
+      "defaultAction": false,
+      "priority": 100,
+      "config": {}
+    }
+  ],
+  "roles": {
+    "realm": [
+      {
+        "name": "user",
+        "description": "Regular user role"
+      },
+      {
+        "name": "administrator",
+        "description": "Administrator role"
+      },
+      {
+        "name": "prothetic_user",
+        "description": "Prothetic user role with report access"
+      }
+    ]
+  },
+  "users": [
+    {
+      "id": "a1000000-0000-4000-8000-000000000001",
+      "username": "user1",
+      "enabled": true,
+      "email": "user1@example.com",
+      "firstName": "User",
+      "lastName": "One",
+      "credentials": [
         {
-          "name": "user",
-          "description": "Regular user role"
-        },
+          "type": "password",
+          "value": "password123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["user"],
+      "requiredActions": ["CONFIGURE_TOTP"]
+    },
+    {
+      "id": "a1000000-0000-4000-8000-000000000002",
+      "username": "user2",
+      "enabled": true,
+      "email": "user2@example.com",
+      "firstName": "User",
+      "lastName": "Two",
+      "credentials": [
         {
-          "name": "administrator",
-          "description": "Administrator role"
-        },
+          "type": "password",
+          "value": "password123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["user"],
+      "requiredActions": ["CONFIGURE_TOTP"]
+    },
+    {
+      "id": "a1000000-0000-4000-8000-000000000003",
+      "username": "admin1",
+      "enabled": true,
+      "email": "admin1@example.com",
+      "firstName": "Admin",
+      "lastName": "One",
+      "credentials": [
         {
-          "name": "prothetic_user",
-          "description": "Prothetic user role with report access"
+          "type": "password",
+          "value": "admin123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["administrator"],
+      "requiredActions": ["CONFIGURE_TOTP"]
+    },
+    {
+      "id": "a1000000-0000-4000-8000-000000000011",
+      "username": "prothetic1",
+      "enabled": true,
+      "email": "prothetic1@example.com",
+      "firstName": "Prothetic",
+      "lastName": "One",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "prothetic123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["prothetic_user"],
+      "requiredActions": ["CONFIGURE_TOTP"]
+    },
+    {
+      "id": "a1000000-0000-4000-8000-000000000012",
+      "username": "prothetic2",
+      "enabled": true,
+      "email": "prothetic2@example.com",
+      "firstName": "Prothetic",
+      "lastName": "Two",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "prothetic123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["prothetic_user"],
+      "requiredActions": ["CONFIGURE_TOTP"]
+    },
+    {
+      "id": "a1000000-0000-4000-8000-000000000013",
+      "username": "prothetic3",
+      "enabled": true,
+      "email": "prothetic3@example.com",
+      "firstName": "Prothetic",
+      "lastName": "Three",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "prothetic123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["prothetic_user"],
+      "requiredActions": ["CONFIGURE_TOTP"]
+    }
+  ],
+  "clients": [
+    {
+      "clientId": "reports-frontend",
+      "enabled": true,
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "redirectUris": ["http://localhost:3000/*", "http://localhost:8000/auth/callback"],
+      "webOrigins": ["http://localhost:3000"],
+      "attributes": {
+        "pkce.code.challenge.method": "S256"
+      }
+    },
+    {
+      "clientId": "bionicpro-auth",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "bionicpro-auth-9f2c4e7a1b8d3f60",
+      "publicClient": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "redirectUris": ["http://localhost:8000/auth/callback", "http://localhost:8085/auth/callback"],
+      "webOrigins": ["http://localhost:3000", "http://localhost:8085"],
+      "attributes": {
+        "pkce.code.challenge.method": "S256"
+      },
+      "protocolMappers": [
+        {
+          "name": "reports-api audience",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.client.audience": "reports-api",
+            "id.token.claim": "false",
+            "access.token.claim": "true"
+          }
         }
       ]
     },
-    "users": [
+    {
+      "clientId": "reports-api",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "oNwoLQdvJAvRcL89SydqCWCe5ry1jMgq",
+      "bearerOnly": true
+    }
+  ],
+  "components": {
+    "org.keycloak.storage.UserStorageProvider": [
       {
-        "username": "user1",
-        "enabled": true,
-        "email": "user1@example.com",
-        "firstName": "User",
-        "lastName": "One",
-        "credentials": [
-          {
-            "type": "password",
-            "value": "password123",
-            "temporary": false
-          }
-        ],
-        "realmRoles": ["user"]
-      },
-      {
-        "username": "user2",
-        "enabled": true,
-        "email": "user2@example.com",
-        "firstName": "User",
-        "lastName": "Two",
-        "credentials": [
-          {
-            "type": "password",
-            "value": "password123",
-            "temporary": false
-          }
-        ],
-        "realmRoles": ["user"]
-      },
-      {
-        "username": "admin1",
-        "enabled": true,
-        "email": "admin1@example.com",
-        "firstName": "Admin",
-        "lastName": "One",
-        "credentials": [
-          {
-            "type": "password",
-            "value": "admin123",
-            "temporary": false
-          }
-        ],
-        "realmRoles": ["administrator"]
-      },
-      {
-        "username": "prothetic1",
-        "enabled": true,
-        "email": "prothetic1@example.com",
-        "firstName": "Prothetic",
-        "lastName": "One",
-        "credentials": [
-          {
-            "type": "password",
-            "value": "prothetic123",
-            "temporary": false
-          }
-        ],
-        "realmRoles": ["prothetic_user"]
-      },
-      {
-        "username": "prothetic2",
-        "enabled": true,
-        "email": "prothetic2@example.com",
-        "firstName": "Prothetic",
-        "lastName": "Two",
-        "credentials": [
-          {
-            "type": "password",
-            "value": "prothetic123",
-            "temporary": false
-          }
-        ],
-        "realmRoles": ["prothetic_user"]
-      },
-      {
-        "username": "prothetic3",
-        "enabled": true,
-        "email": "prothetic3@example.com",
-        "firstName": "Prothetic",
-        "lastName": "Three",
-        "credentials": [
-          {
-            "type": "password",
-            "value": "prothetic123",
-            "temporary": false
-          }
-        ],
-        "realmRoles": ["prothetic_user"]
-      }
-    ],
-    "clients": [
-      {
-        "clientId": "reports-frontend",
-        "enabled": true,
-        "publicClient": true,
-        "redirectUris": ["http://localhost:3000/*"],
-        "webOrigins": ["http://localhost:3000"],
-        "directAccessGrantsEnabled": true
-      },
-      {
-        "clientId": "reports-api",
-        "enabled": true,
-        "clientAuthenticatorType": "client-secret",
-        "secret": "oNwoLQdvJAvRcL89SydqCWCe5ry1jMgq", 
-        "bearerOnly": true
+        "id": "bionicpro-openldap-storage",
+        "name": "openldap",
+        "providerId": "ldap",
+        "subComponents": {
+          "org.keycloak.storage.ldap.mappers.LDAPStorageMapper": [
+            {
+              "id": "bionicpro-openldap-username-mapper",
+              "name": "username",
+              "providerId": "user-attribute-ldap-mapper",
+              "config": {
+                "user.model.attribute": ["username"],
+                "ldap.attribute": ["uid"],
+                "read.only": ["true"],
+                "always.read.value.from.ldap": ["false"],
+                "is.mandatory.in.ldap": ["true"]
+              }
+            },
+            {
+              "id": "bionicpro-openldap-email-mapper",
+              "name": "email",
+              "providerId": "user-attribute-ldap-mapper",
+              "config": {
+                "user.model.attribute": ["email"],
+                "ldap.attribute": ["mail"],
+                "read.only": ["true"],
+                "always.read.value.from.ldap": ["false"],
+                "is.mandatory.in.ldap": ["false"]
+              }
+            },
+            {
+              "id": "bionicpro-openldap-first-name-mapper",
+              "name": "first name",
+              "providerId": "user-attribute-ldap-mapper",
+              "config": {
+                "user.model.attribute": ["firstName"],
+                "ldap.attribute": ["cn"],
+                "read.only": ["true"],
+                "always.read.value.from.ldap": ["true"],
+                "is.mandatory.in.ldap": ["false"]
+              }
+            },
+            {
+              "id": "bionicpro-openldap-last-name-mapper",
+              "name": "last name",
+              "providerId": "user-attribute-ldap-mapper",
+              "config": {
+                "user.model.attribute": ["lastName"],
+                "ldap.attribute": ["sn"],
+                "read.only": ["true"],
+                "always.read.value.from.ldap": ["true"],
+                "is.mandatory.in.ldap": ["false"]
+              }
+            },
+            {
+              "id": "bionicpro-openldap-role-mapper",
+              "name": "openldap role mapper",
+              "providerId": "role-ldap-mapper",
+              "config": {
+                "mode": ["READ_ONLY"],
+                "roles.dn": ["ou=Groups,dc=example,dc=com"],
+                "role.name.ldap.attribute": ["cn"],
+                "role.object.classes": ["groupOfNames"],
+                "membership.ldap.attribute": ["member"],
+                "membership.user.ldap.attribute": ["uid"],
+                "membership.attribute.type": ["DN"],
+                "user.roles.retrieve.strategy": ["LOAD_ROLES_BY_MEMBER_ATTRIBUTE"],
+                "memberof.ldap.attribute": ["memberOf"],
+                "use.realm.roles.mapping": ["true"]
+              }
+            }
+          ]
+        },
+        "config": {
+          "cachePolicy": ["DEFAULT"],
+          "connectionPooling": ["true"],
+          "connectionUrl": ["ldap://openldap:389"],
+          "usersDn": ["ou=People,dc=example,dc=com"],
+          "bindDn": ["cn=admin,dc=example,dc=com"],
+          "bindCredential": ["admin"],
+          "authType": ["simple"],
+          "editMode": ["READ_ONLY"],
+          "syncRegistrations": ["false"],
+          "importEnabled": ["true"],
+          "usernameLDAPAttribute": ["uid"],
+          "rdnLDAPAttribute": ["uid"],
+          "uuidLDAPAttribute": ["entryUUID"],
+          "userObjectClasses": ["inetOrgPerson, organizationalPerson"],
+          "searchScope": ["1"],
+          "validatePasswordPolicy": ["false"],
+          "trustEmail": ["false"],
+          "useTruststoreSpi": ["ldapsOnly"],
+          "useKerberosForPasswordAuthentication": ["false"],
+          "allowKerberosAuthentication": ["false"],
+          "priority": ["0"],
+          "batchSizeForSync": ["1000"],
+          "fullSyncPeriod": ["-1"],
+          "changedSyncPeriod": ["-1"],
+          "pagination": ["true"]
+        }
       }
     ]
-  }
+  },
+  "identityProviders": [
+    {
+      "alias": "yandex",
+      "displayName": "Яндекс ID",
+      "providerId": "oidc",
+      "enabled": true,
+      "trustEmail": false,
+      "storeToken": false,
+      "addReadTokenRoleOnCreate": false,
+      "authenticateByDefault": false,
+      "linkOnly": false,
+      "firstBrokerLoginFlowAlias": "BionicPRO first broker login",
+      "config": {
+        "clientId": "bionicpro-yandex-app-id",
+        "clientSecret": "bionicpro-yandex-app-secret",
+        "authorizationUrl": "https://oauth.yandex.ru/authorize",
+        "tokenUrl": "https://oauth.yandex.ru/token",
+        "userInfoUrl": "https://login.yandex.ru/info",
+        "defaultScope": "login:info login:email",
+        "syncMode": "IMPORT",
+        "hideOnLoginPage": "false",
+        "acceptsPromptNoneForwardFromClient": "false",
+        "disableUserInfo": "false",
+        "loginHint": "false",
+        "uiLocales": "false"
+      }
+    }
+  ],
+  "identityProviderMappers": [
+    {
+      "name": "yandex username",
+      "identityProviderAlias": "yandex",
+      "identityProviderMapper": "oidc-username-idp-mapper",
+      "config": {
+        "template": "${CLAIM.login}",
+        "syncMode": "INHERIT"
+      }
+    },
+    {
+      "name": "yandex first name",
+      "identityProviderAlias": "yandex",
+      "identityProviderMapper": "oidc-user-attribute-idp-mapper",
+      "config": {
+        "claim": "first_name",
+        "user.attribute": "firstName",
+        "jsonType.label": "String",
+        "syncMode": "INHERIT"
+      }
+    },
+    {
+      "name": "yandex last name",
+      "identityProviderAlias": "yandex",
+      "identityProviderMapper": "oidc-user-attribute-idp-mapper",
+      "config": {
+        "claim": "last_name",
+        "user.attribute": "lastName",
+        "jsonType.label": "String",
+        "syncMode": "INHERIT"
+      }
+    },
+    {
+      "name": "yandex email",
+      "identityProviderAlias": "yandex",
+      "identityProviderMapper": "oidc-user-attribute-idp-mapper",
+      "config": {
+        "claim": "email",
+        "user.attribute": "email",
+        "jsonType.label": "String",
+        "syncMode": "INHERIT"
+      }
+    }
+  ],
+  "authenticationFlows": [
+    {
+      "alias": "BionicPRO browser otp",
+      "providerId": "basic-flow",
+      "topLevel": false,
+      "builtIn": false,
+      "authenticationExecutions": [
+        {
+          "authenticator": "conditional-user-configured",
+          "authenticatorFlow": false,
+          "requirement": "REQUIRED",
+          "priority": 0,
+          "authenticatorConfig": "bionicpro otp condition",
+          "userSetupAllowed": false
+        },
+        {
+          "authenticator": "auth-otp-form",
+          "authenticatorFlow": false,
+          "requirement": "REQUIRED",
+          "priority": 1,
+          "userSetupAllowed": false
+        }
+      ]
+    },
+    {
+      "alias": "BionicPRO browser forms",
+      "providerId": "basic-flow",
+      "topLevel": false,
+      "builtIn": false,
+      "authenticationExecutions": [
+        {
+          "authenticator": "auth-username-password-form",
+          "authenticatorFlow": false,
+          "requirement": "REQUIRED",
+          "priority": 0,
+          "userSetupAllowed": false
+        },
+        {
+          "authenticatorFlow": true,
+          "requirement": "REQUIRED",
+          "priority": 1,
+          "flowAlias": "BionicPRO browser otp",
+          "userSetupAllowed": false
+        }
+      ]
+    },
+    {
+      "alias": "BionicPRO browser",
+      "description": "Browser flow with mandatory OTP (MFA)",
+      "providerId": "basic-flow",
+      "topLevel": true,
+      "builtIn": false,
+      "authenticationExecutions": [
+        {
+          "authenticator": "auth-cookie",
+          "authenticatorFlow": false,
+          "requirement": "ALTERNATIVE",
+          "priority": 0,
+          "userSetupAllowed": false
+        },
+        {
+          "authenticatorFlow": true,
+          "requirement": "ALTERNATIVE",
+          "priority": 1,
+          "flowAlias": "BionicPRO browser forms",
+          "userSetupAllowed": false
+        }
+      ]
+    },
+    {
+      "alias": "BionicPRO first broker login reauthentication",
+      "providerId": "basic-flow",
+      "topLevel": false,
+      "builtIn": false,
+      "authenticationExecutions": [
+        {
+          "authenticator": "idp-username-password-form",
+          "authenticatorFlow": false,
+          "requirement": "REQUIRED",
+          "priority": 0,
+          "userSetupAllowed": false
+        },
+        {
+          "authenticator": "auth-otp-form",
+          "authenticatorFlow": false,
+          "requirement": "CONDITIONAL",
+          "priority": 1,
+          "authenticatorConfig": "bionicpro otp condition",
+          "userSetupAllowed": false
+        }
+      ]
+    },
+    {
+      "alias": "BionicPRO first broker login account verification",
+      "providerId": "basic-flow",
+      "topLevel": false,
+      "builtIn": false,
+      "authenticationExecutions": [
+        {
+          "authenticator": "idp-email-verification",
+          "authenticatorFlow": false,
+          "requirement": "ALTERNATIVE",
+          "priority": 0,
+          "userSetupAllowed": false
+        },
+        {
+          "authenticatorFlow": true,
+          "requirement": "ALTERNATIVE",
+          "priority": 1,
+          "flowAlias": "BionicPRO first broker login reauthentication",
+          "userSetupAllowed": false
+        }
+      ]
+    },
+    {
+      "alias": "BionicPRO first broker login handle existing account",
+      "providerId": "basic-flow",
+      "topLevel": false,
+      "builtIn": false,
+      "authenticationExecutions": [
+        {
+          "authenticator": "idp-confirm-link",
+          "authenticatorFlow": false,
+          "requirement": "REQUIRED",
+          "priority": 0,
+          "userSetupAllowed": false
+        },
+        {
+          "authenticatorFlow": true,
+          "requirement": "REQUIRED",
+          "priority": 1,
+          "flowAlias": "BionicPRO first broker login account verification",
+          "userSetupAllowed": false
+        }
+      ]
+    },
+    {
+      "alias": "BionicPRO first broker login user creation",
+      "providerId": "basic-flow",
+      "topLevel": false,
+      "builtIn": false,
+      "authenticationExecutions": [
+        {
+          "authenticator": "idp-create-user-if-unique",
+          "authenticatorFlow": false,
+          "requirement": "ALTERNATIVE",
+          "priority": 0,
+          "authenticatorConfig": "bionicpro create unique user config",
+          "userSetupAllowed": false
+        },
+        {
+          "authenticatorFlow": true,
+          "requirement": "ALTERNATIVE",
+          "priority": 1,
+          "flowAlias": "BionicPRO first broker login handle existing account",
+          "userSetupAllowed": false
+        }
+      ]
+    },
+    {
+      "alias": "BionicPRO first broker login account linking",
+      "providerId": "basic-flow",
+      "topLevel": false,
+      "builtIn": false,
+      "authenticationExecutions": [
+        {
+          "authenticator": "idp-confirm-link",
+          "authenticatorFlow": false,
+          "requirement": "REQUIRED",
+          "priority": 0,
+          "userSetupAllowed": false
+        },
+        {
+          "authenticatorFlow": true,
+          "requirement": "REQUIRED",
+          "priority": 1,
+          "flowAlias": "BionicPRO first broker login account verification",
+          "userSetupAllowed": false
+        }
+      ]
+    },
+    {
+      "alias": "BionicPRO first broker login",
+      "description": "First login via external IdP: consent for profile data usage, then profile review",
+      "providerId": "basic-flow",
+      "topLevel": true,
+      "builtIn": false,
+      "authenticationExecutions": [
+        {
+          "authenticator": "idp-review-profile",
+          "authenticatorFlow": false,
+          "requirement": "REQUIRED",
+          "priority": 0,
+          "authenticatorConfig": "bionicpro review profile config",
+          "userSetupAllowed": false
+        },
+        {
+          "authenticator": "consent",
+          "authenticatorFlow": false,
+          "requirement": "REQUIRED",
+          "priority": 1,
+          "authenticatorConfig": "bionicpro consent config",
+          "userSetupAllowed": false
+        },
+        {
+          "authenticatorFlow": true,
+          "requirement": "ALTERNATIVE",
+          "priority": 2,
+          "flowAlias": "BionicPRO first broker login user creation",
+          "userSetupAllowed": false
+        },
+        {
+          "authenticatorFlow": true,
+          "requirement": "ALTERNATIVE",
+          "priority": 3,
+          "flowAlias": "BionicPRO first broker login account linking",
+          "userSetupAllowed": false
+        }
+      ]
+    }
+  ],
+  "authenticatorConfig": [
+    {
+      "alias": "bionicpro otp condition",
+      "config": {
+        "cond": "otp"
+      }
+    },
+    {
+      "alias": "bionicpro review profile config",
+      "config": {
+        "update.profile.on.first.login": "missing"
+      }
+    },
+    {
+      "alias": "bionicpro consent config",
+      "config": {
+        "consentText": "Разрешаю BionicPRO получать данные моего профиля Яндекс ID (логин, имя, email) и использовать их для работы сервиса отчётов."
+      }
+    },
+    {
+      "alias": "bionicpro create unique user config",
+      "config": {
+        "require.password.update.after.registration": "false"
+      }
+    }
+  ]
+}
