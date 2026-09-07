@@ -1,9 +1,7 @@
 # BionicPRO — Architecture
-
 Учебный архитектурный проект по кейсу BionicPRO (производитель бионических протезов)
 
 ## Оглавление
-
 - [Задание 1. Повышение безопасности системы](#задание-1-повышение-безопасности-системы)
 - [Задание 2. Разработка сервиса отчётов](#задание-2-разработка-сервиса-отчётов)
 - [Задание 3. Снижение нагрузки на базу данных](#задание-3-снижение-нагрузки-на-базу-данных)
@@ -14,7 +12,6 @@
 - [Админ-панели](#админ-панели)
 
 ## Задание 1. Повышение безопасности системы
-
 PKCE-флоу, бэкенд-сервис сессий, фронтенд без токенов, LDAP-федерация, MFA, Яндекс ID.
 
 - Диаграмма: [docs/security-architecture.drawio](docs/security-architecture.drawio)
@@ -27,7 +24,6 @@ PKCE-флоу, бэкенд-сервис сессий, фронтенд без �
 - LDAP: [ldap/config.ldif](ldap/config.ldif)
 
 ## Задание 2. Разработка сервиса отчётов
-
 Airflow ETL из CRM в витрину ClickHouse, API `/reports`, читающий готовую витрину.
 
 - Диаграмма: [docs/reports-architecture.drawio](docs/reports-architecture.drawio)
@@ -37,13 +33,11 @@ Airflow ETL из CRM в витрину ClickHouse, API `/reports`, читающ�
 - CRM (сид-данные: клиенты, протезы, телеметрия): [crm/init.sql](crm/init.sql)
 
 ## Задание 3. Снижение нагрузки на базу данных
-
 Кеш отчётов в S3 (MinIO) и раздача через CDN (Nginx).
 - Nginx (отдельная папка): [nginx/](nginx/)
 - Развёртывание MinIO и Nginx: [docker-compose.yaml](docker-compose.yaml) (сервисы `minio`, `minio-init`, `nginx`, `nginx-gateway`)
 
 ## Задание 4. Повышение оперативности и стабильности работы CRM
-
 CDC из CRM через Debezium → Kafka → ClickHouse.
 
 - Debezium-коннектор (отдельная папка): [debezium/](debezium/)
@@ -51,12 +45,10 @@ CDC из CRM через Debezium → Kafka → ClickHouse.
 - Развёртывание Kafka и kafka-connect: [docker-compose.yaml](docker-compose.yaml) (сервисы `kafka`, `kafka-connect`, `debezium-init`)
 
 ## Инфраструктура и общие файлы
-
 - [docker-compose.yaml](docker-compose.yaml) — все сервисы стека
 - [Makefile](Makefile) — запуск окружений по заданиям и вспомогательные цели
 
 ## Запуск
-
 Окружение поднимается через `Makefile` (накопительный состав сервисов):
 
 ```bash
@@ -73,8 +65,7 @@ make clean      # остановить и удалить контейнеры и
 make reset-keycloak  # переимпорт realm (очистка БД Keycloak)
 ```
 
-Точки входа:
-
+## Точки входа:
 - Gateway (frontend + auth + reports): http://localhost:8085
 - Keycloak: http://localhost:8080 (admin/admin, realm `reports-realm`)
 - Airflow: http://localhost:8082
@@ -83,7 +74,6 @@ make reset-keycloak  # переимпорт realm (очистка БД Keycloak)
 ## Пользователи
 
 ### Приложение (realm `reports-realm`)
-
 Вход через gateway http://localhost:8085. Для всех пользователей realm при первом входе
 Keycloak требует зарегистрировать OTP (MFA, required action `CONFIGURE_TOTP`).
 
@@ -108,7 +98,6 @@ Keycloak требует зарегистрировать OTP (MFA, required acti
 | `alex.johnson` | `password` | `prothetic_user` |
 
 ## Админ-панели
-
 | Сервис | URL | Логин | Пароль |
 |---|---|---|---|
 | Keycloak (master realm) | http://localhost:8080 | `admin` | `admin` |
